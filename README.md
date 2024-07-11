@@ -1,5 +1,5 @@
 
-# Project Title
+# Mines
 
 A mini game based on Hacksaw mines from STAKE,
 Where players flip tiles on a board to collect diamonds and increase their score. However, if a player uncovers a mine, they lose the game. The goal is to collect as many diamonds as possible without hitting a mine.
