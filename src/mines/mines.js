@@ -23,9 +23,9 @@ const Mines = () => {
     const explosionaudioref = useRef(new Audio(explosion));
     const jackpotaudioref = useRef(new Audio(jackpot));
     //Store Score locally
-    useEffect = (() => {
+    useEffect(() => {
         localStorage.setItem('Highscore', JSON.stringify(score));
-    }, [score])
+    }, [score]);
     function showHighscore() {
         if (grid === 9) return highscore1;
         if (grid === 25) return highscore2;
@@ -152,7 +152,7 @@ const Mines = () => {
                         className='grid'
                         style={{
                             gridTemplateColumns: `repeat(${Math.sqrt(grid)}, 1fr)`,
-                            gridTemplateRows: "repeat(2,150px)"
+                            gridTemplateRows: "repeat(2,160px)"
                         }}
                     >
                         {blocks.map((value, index) => {
