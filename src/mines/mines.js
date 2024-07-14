@@ -15,9 +15,11 @@ const Mines = () => {
     const [minenumber, setminenumber] = useState(1);
     const [score, setScore] = useState(0);
     const [showoverlay, setshowoverlay] = useState(true);
-    const highscore1 = localStorage.getItem("highscore1");
-    const highscore2 = localStorage.getItem("highscore2");
-    const highscore3 = localStorage.getItem("highscore3");
+    const [highscore1, setHighscore1] = useState(localStorage.getItem("highscore1") || 0);
+    const [highscore2, setHighscore2] = useState(localStorage.getItem("highscore2") || 0);
+    const [highscore3, setHighscore3] = useState(localStorage.getItem("highscore3") || 0);
+
+
     //audio refs
     const clickaudioref = useRef(new Audio(touch));
     const explosionaudioref = useRef(new Audio(explosion));
@@ -76,14 +78,18 @@ const Mines = () => {
             setBlocks(tempblocks);
             setGameover(true);
             explosionaudioref.current.play();
-            if (highscore1 < score && grid === 9) {
+            //showing and updating high score based on the grid size
+            if (score > highscore1 && grid === 9) {
                 localStorage.setItem("highscore1", score);
+                setHighscore1(score);
             }
-            if (highscore2 < score && grid === 25) {
+            if (score > highscore2 && grid === 25) {
                 localStorage.setItem("highscore2", score);
+                setHighscore2(score);
             }
-            if (highscore3 < score && grid === 49) {
+            if (score > highscore3 && grid === 49) {
                 localStorage.setItem("highscore3", score);
+                setHighscore3(score);
             }
 
             console.log("gameover");
@@ -119,25 +125,34 @@ const Mines = () => {
 
 
     return (
-        <>
+        <div>
             <div className='navbar'>
-                <img src={titlebomb} alt="diamond" style={{ width: '10%', height: '95%', borderRadius: "5px" }} />
-                <h1>MINES</h1>
+                <div className='title'>
+                    <img src={titlebomb} alt="diamond" style={{ width: '5vw', height: '70%', borderRadius: "5px" }} />
+                    <h1>MINES</h1>
+                </div>
+                <div className='scores'>
+                    <h3 >SCORE:{score}</h3>
+                    <h3>Highscore:{showHighscore()}</h3>
+                </div>
             </div>
             <div className='main-container'>
                 <div className='sidebar'>
                     <div className='sidebar-content'>
-                        <div style={{ fontFamily: "cursive", fontSize: "20px" }}>Set Board</div>
-                        <div style={{ fontFamily: "cursive", fontSize: "15px" }}>Number of mines : {showmines()}</div>
-                        <div className='set-board'>
-                            <button className="grid-btn" onClick={() => changegrid(9, 1)}>3X3</button>
-                            <button className="grid-btn" onClick={() => changegrid(25, 5)}>5X5</button>
-                            <button className="grid-btn" onClick={() => changegrid(49, 7)}>7X7</button>
+                        <div className='game-info'
+                        >
+                            <div>Set Board</div>
+                            <div>Number of mines : {showmines()}</div>
                         </div>
-                        <div className='game-status'>
-                            <button onClick={() => gameStart()}>Play</button>
-                            <h3>SCORE:{score}</h3>
-                            <h3>Highscore:{showHighscore()}</h3>
+                        <div className='game-btns'>
+                            <div className='set-board'>
+                                <button className="grid-btn" onClick={() => changegrid(9, 1)}>3X3</button>
+                                <button className="grid-btn" onClick={() => changegrid(25, 5)}>5X5</button>
+                                <button className="grid-btn" onClick={() => changegrid(49, 7)}>7X7</button>
+                            </div>
+                            <div className='game-status'>
+                                <button onClick={() => gameStart()}>Play</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -152,7 +167,7 @@ const Mines = () => {
                         className='grid'
                         style={{
                             gridTemplateColumns: `repeat(${Math.sqrt(grid)}, 1fr)`,
-                            gridTemplateRows: "repeat(2,160px)"
+
                         }}
                     >
                         {blocks.map((value, index) => {
@@ -171,7 +186,7 @@ const Mines = () => {
                 </div>
             </div>
 
-        </>
+        </div>
     );
 }
 
