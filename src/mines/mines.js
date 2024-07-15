@@ -41,7 +41,6 @@ const Mines = () => {
     const generatemines = (minenumber) => {
         mine.fill(0);
         const tempmine = Array(grid).fill(0);
-        console.log(tempmine)
         var mineplaced = 0;
         while (mineplaced < minenumber) {
             const mineindex = Math.floor(Math.random() * grid);
@@ -92,13 +91,11 @@ const Mines = () => {
                 setHighscore3(score);
             }
 
-            console.log("gameover");
-
         }
         else {
             setWin((prevWin) => {
                 const newWin = prevWin - 1;
-                console.log(win)
+
                 blocks[index] = "visible";
                 setScore(score + 1);
                 clickaudioref.current.play();
