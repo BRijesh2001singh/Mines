@@ -18,8 +18,6 @@ const Mines = () => {
     const [highscore1, setHighscore1] = useState(localStorage.getItem("highscore1") || 0);
     const [highscore2, setHighscore2] = useState(localStorage.getItem("highscore2") || 0);
     const [highscore3, setHighscore3] = useState(localStorage.getItem("highscore3") || 0);
-
-
     //audio refs
     const clickaudioref = useRef(new Audio(touch));
     const explosionaudioref = useRef(new Audio(explosion));
@@ -34,7 +32,7 @@ const Mines = () => {
         if (grid === 49) return highscore3;
     }
     function showmines() {
-        if (grid === 9) return 3;
+        if (grid === 9) return 1;
         if (grid === 25) return 5;
         if (grid === 49) return 7;
     }
@@ -58,7 +56,7 @@ const Mines = () => {
         setshowoverlay(false);
         setWin(grid - 1);
         setScore(0);
-
+        
         //reset the board
         const newBlocks = [...blocks];
         newBlocks.fill("hidden");
@@ -114,6 +112,7 @@ const Mines = () => {
     //change grid size
     const changegrid = (gridsize, newminenumber) => {
         setGrid((gridsize));
+        setshowoverlay(true);
         const newBlocks = Array(gridsize).fill("hidden");
         setBlocks(newBlocks);
         setminenumber(newminenumber);
@@ -148,7 +147,7 @@ const Mines = () => {
                                 <button className="grid-btn" onClick={() => changegrid(49, 7)}>7X7</button>
                             </div>
                             <div className='game-status'>
-                                <button onClick={() => gameStart()}>Play</button>
+                                <button onClick={() => gameStart()}>{gameover?"Play":"Reset"}</button>
                             </div>
                         </div>
                     </div>
